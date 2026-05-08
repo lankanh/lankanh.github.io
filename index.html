@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jagadeesh Lanka — Digital Media & 3D Design Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080a0d;--bg2:#0e1116;--bg3:#12151b;
+  --surface:#181c24;--surface2:#1e2330;
+  --gold:#c8922a;--gold2:#e8b84b;
+  --gold-dim:rgba(200,146,42,0.1);
+  --text:#f0ece4;--text2:#8a9099;--text3:#4a5260;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Syne',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cursor{position:fixed;pointer-events:none;z-index:9999;mix-blend-mode:difference}
+.cursor-dot{width:6px;height:6px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;transform:translate(-50%,-50%);transition:all .15s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:68px;background:rgba(8,10,13,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--gold2);letter-spacing:.04em;text-decoration:none;font-style:italic}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.nav-links a:hover{color:var(--gold2)}.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:.45rem 1.2rem;border-radius:2px;text-decoration:none;transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--gold);color:#080a0d}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 4rem 4rem;position:relative;overflow:hidden}
+.hero-bg-text{position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(8rem,16vw,20rem);font-weight:300;font-style:italic;color:rgba(255,255,255,0.018);line-height:1;pointer-events:none;user-select:none;white-space:nowrap}
+.hero-glow{position:absolute;top:25%;left:45%;width:700px;height:500px;background:radial-gradient(ellipse,rgba(200,146,42,0.06) 0%,transparent 70%);transform:translate(-50%,-50%);pointer-events:none}
+.hero-content{max-width:780px;position:relative;z-index:1}
+.hero-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.hero-label::before{content:'';width:40px;height:1px;background:var(--gold)}
+.hero-name{font-family:var(--serif);font-size:clamp(3.5rem,7vw,7rem);font-weight:300;line-height:1.05;margin-bottom:.5rem;letter-spacing:-.01em}
+.hero-name em{font-style:italic;color:var(--gold2)}
+.hero-role{font-family:var(--sans);font-size:clamp(.9rem,1.8vw,1.1rem);font-weight:400;color:var(--text2);margin-bottom:2rem;letter-spacing:.06em;text-transform:uppercase}
+.hero-desc{font-family:var(--serif);font-size:1.1rem;font-weight:300;color:var(--text2);max-width:50ch;line-height:1.9;margin-bottom:2.5rem}
+.hero-tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+.tool-chip{font-family:var(--mono);font-size:.63rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .75rem;border:1px solid var(--border2);color:var(--text2);border-radius:2px;background:var(--surface);transition:border-color .2s,color .2s}
+.tool-chip:hover{border-color:var(--gold);color:var(--gold)}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn-gold{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:#080a0d;padding:.8rem 2rem;border-radius:2px;text-decoration:none;transition:background .2s,transform .15s;display:inline-block}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border2);color:var(--text2);padding:.8rem 2rem;border-radius:2px;text-decoration:none;transition:border-color .2s,color .2s,transform .15s;display:inline-block}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+/* SURVEY BOX */
+.survey-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:1.75rem;max-width:700px;position:relative;z-index:1}
+.survey-box-label{font-family:var(--mono);font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.survey-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.survey-row{display:flex;align-items:center;gap:.65rem;background:var(--bg3);padding:.6rem .85rem;border-radius:2px;border:1px solid var(--border)}
+.survey-tool{font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:var(--text2);min-width:88px}
+.survey-level{font-family:var(--mono);font-size:.62rem;color:var(--gold2)}
+.survey-dots{display:flex;gap:3px;margin-left:auto}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--border2)}
+.dot.filled{background:var(--gold)}
+
+/* SECTIONS */
+section{padding:7rem 4rem;position:relative}
+section:nth-child(even){background:var(--bg2)}
+.section-header{margin-bottom:3.5rem}
+.section-index{font-family:var(--mono);font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;display:flex;align-items:center;gap:1rem}
+.section-index::after{content:'';flex:1;height:1px;background:var(--border);max-width:60px}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:300;font-style:italic;color:var(--text);line-height:1.1}
+.section-title strong{font-style:normal;font-weight:600;color:var(--gold2)}
+
+/* MOTION GRID */
+.motion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.motion-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .25s,transform .25s}
+.motion-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.motion-card video{width:100%;height:220px;object-fit:cover;display:block;background:#000}
+.motion-card-body{padding:1.2rem}
+.motion-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.motion-title{font-family:var(--serif);font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:.3rem}
+.motion-desc{font-family:var(--sans);font-size:.8rem;color:var(--text2);line-height:1.6}
+
+/* BLENDER */
+.blend-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.blend-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .25s,transform .25s}
+.blend-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.blend-card img{width:100%;height:260px;object-fit:cover;filter:brightness(.9);transition:filter .3s}
+.blend-card:hover img{filter:brightness(1)}
+.blend-card-body{padding:1.2rem}
+.blend-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.blend-title{font-family:var(--serif);font-size:1.1rem;font-weight:300;color:var(--text);margin-bottom:.35rem}
+.blend-desc{font-family:var(--sans);font-size:.8rem;color:var(--text2);line-height:1.6}
+.blend-badge{display:inline-block;margin-top:.65rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;background:var(--gold-dim);color:var(--gold);padding:.22rem .55rem;border-radius:2px;border:1px solid rgba(200,146,42,0.2)}
+
+/* LOGO GRID */
+.logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.logo-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .25s,transform .25s;display:flex;flex-direction:column}
+.logo-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.logo-img-wrap{display:flex;align-items:center;justify-content:center;height:200px;padding:2rem}
+.logo-img-wrap.dark{background:#050505}
+.logo-img-wrap.light{background:#dedede}
+.logo-img-wrap.teal-bg{background:#08181a}
+.logo-img-wrap.cream{background:#f0ece4}
+.logo-img-wrap.grey{background:#d4d4d4}
+.logo-card img{max-width:100%;max-height:150px;object-fit:contain;transition:transform .3s}
+.logo-card:hover img{transform:scale(1.05)}
+.logo-card-body{padding:1.2rem;flex:1}
+.logo-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.logo-title{font-family:var(--serif);font-size:1.05rem;font-weight:300;color:var(--text);margin-bottom:.25rem}
+.logo-desc{font-family:var(--sans);font-size:.78rem;color:var(--text2);line-height:1.6}
+
+/* ADS GRID */
+.work-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.filter-btn{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .95rem;border-radius:2px;border:1px solid var(--border);color:var(--text3);background:transparent;cursor:none;transition:all .2s}
+.filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
+.work-item{background:var(--bg3);overflow:hidden;position:relative;cursor:none}
+.work-item:hover{z-index:2}
+.work-item .img-wrap{width:100%;overflow:hidden}
+.work-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.25,.46,.45,.94),filter .3s;filter:brightness(.88) saturate(.9)}
+.work-item:hover img{transform:scale(1.06);filter:brightness(1) saturate(1.1)}
+.work-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(8,10,13,.95) 0%,rgba(8,10,13,.4) 60%,transparent 100%);padding:1.25rem;transform:translateY(40%);transition:transform .3s}
+.work-item:hover .work-overlay{transform:translateY(0)}
+.work-cat{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.work-title{font-family:var(--serif);font-size:1rem;font-weight:300;color:var(--text)}
+.work-client{font-family:var(--mono);font-size:.62rem;color:var(--text2)}
+.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}
+.tall .img-wrap{height:380px}.mid .img-wrap{height:300px}.short .img-wrap{height:250px}
+
+/* PRINT */
+.print-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.print-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .25s,transform .25s}
+.print-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.print-card img{width:100%;height:300px;object-fit:contain;background:var(--bg3);padding:1.5rem;transition:filter .3s}
+.print-card:hover img{filter:brightness(1.05)}
+.print-card-body{padding:1.2rem}
+.print-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.print-title{font-family:var(--serif);font-size:1.05rem;font-weight:300;color:var(--text);margin-bottom:.25rem}
+.print-desc{font-family:var(--sans);font-size:.78rem;color:var(--text2);line-height:1.6}
+.map-wrap{border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;margin-top:1.5rem}
+.map-wrap img{width:100%;display:block;filter:brightness(.85);transition:filter .3s}
+.map-wrap:hover img{filter:brightness(1)}
+.map-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(8,10,13,.95),transparent);padding:1.5rem}
+.map-label-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.map-label-title{font-family:var(--serif);font-size:1.2rem;font-weight:300;color:var(--text)}
+
+/* ABOUT */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.about-text p{font-family:var(--serif);font-size:1rem;font-weight:300;color:var(--text2);line-height:1.95;margin-bottom:1.4rem}
+.about-text p strong{color:var(--gold2);font-weight:600}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+.stat{background:var(--surface);padding:1.75rem;transition:background .2s}
+.stat:hover{background:var(--surface2)}
+.stat-num{font-family:var(--serif);font-size:2.8rem;font-weight:300;font-style:italic;color:var(--gold2);line-height:1}
+.stat-label{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-top:.4rem}
+.stat-sub{font-size:.8rem;color:var(--text2);margin-top:.2rem}
+
+/* SKILLS */
+.tools-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.6rem;transition:border-color .2s,transform .2s}
+.tool-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.tool-icon{font-size:1.6rem;margin-bottom:.9rem}
+.tool-name{font-family:var(--sans);font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
+.tool-level{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.tool-bar{height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.tool-bar-fill{height:100%;background:linear-gradient(to right,var(--gold),var(--gold2));border-radius:1px}
+
+/* EXPERIENCE */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.exp-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.75rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.exp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.exp-card:hover::before{transform:scaleX(1)}
+.exp-card:hover{border-color:rgba(200,146,42,.3);transform:translateY(-3px)}
+.exp-date{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.exp-role{font-family:var(--serif);font-size:1.2rem;font-weight:300;color:var(--text);margin-bottom:.2rem}
+.exp-company{font-family:var(--sans);font-size:.82rem;color:var(--text2);margin-bottom:.9rem}
+.exp-desc{font-family:var(--sans);font-size:.8rem;color:var(--text3);line-height:1.7}
+
+/* CONTACT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.contact-text p{font-family:var(--serif);font-size:1.05rem;font-weight:300;color:var(--text2);line-height:1.9;margin-bottom:1.4rem}
+.contact-links{display:flex;flex-direction:column;gap:.65rem}
+.contact-link{display:flex;align-items:center;gap:1rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.07em;color:var(--text2);text-decoration:none;padding:.9rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;transition:border-color .2s,color .2s,transform .15s}
+.contact-link:hover{border-color:var(--gold);color:var(--gold);transform:translateX(4px)}
+.contact-icon{font-size:.95rem;width:18px;text-align:center}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2.5rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.footer-name{font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--text2)}
+.footer-copy{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;color:var(--text3)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+@media(max-width:900px){
+  nav{padding:0 1.5rem}.nav-links{display:none}
+  section{padding:4rem 1.5rem}#hero{padding:7rem 1.5rem 3rem}
+  .hero-name{font-size:3rem}
+  .motion-grid,.blend-grid,.logo-grid,.print-grid,.about-layout,.exp-grid,.tools-layout,.contact-layout{grid-template-columns:1fr}
+  .work-grid{grid-template-columns:1fr!important}
+  .span-3,.span-4,.span-5,.span-6,.span-7{grid-column:span 1!important}
+  .survey-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:1rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor cursor-dot" id="cursorDot"></div>
+<div class="cursor cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Jagadeesh Lanka</a>
+  <ul class="nav-links">
+    <li><a href="#motion">Motion</a></li>
+    <li><a href="#blender">3D</a></li>
+    <li><a href="#logos">Logos</a></li>
+    <li><a href="#ads">Ads</a></li>
+    <li><a href="#print">Print</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:lankanh@mail.uc.edu" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-bg-text">Design</div>
+  <div class="hero-content">
+    <div class="hero-label">2D · 3D · Motion · Brand · Logo</div>
+    <h1 class="hero-name">Jagadeesh<br/><em>Lanka</em></h1>
+    <p class="hero-role">Digital Media Specialist &amp; 3D Artist</p>
+    <p class="hero-desc">Engineer-turned-designer crafting compelling visual narratives — from animated motion graphics and 3D architectural models to complete brand identities across real-world clients.</p>
+    <div class="hero-tools">
+      <span class="tool-chip">Blender</span>
+      <span class="tool-chip">After Effects</span>
+      <span class="tool-chip">Premiere Pro</span>
+      <span class="tool-chip">Photoshop</span>
+      <span class="tool-chip">Illustrator</span>
+      <span class="tool-chip">GIMP</span>
+      <span class="tool-chip">Inkscape</span>
+      <span class="tool-chip">Canva</span>
+      <span class="tool-chip">Godot / Unity</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#motion" class="btn-gold">View My Work</a>
+      <a href="#contact" class="btn-ghost">Get In Touch</a>
+    </div>
+
+    <div class="survey-box reveal">
+      <div class="survey-box-label">// Tool Experience — Survey Summary</div>
+      <div class="survey-grid">
+        <div class="survey-row">
+          <span class="survey-tool">Blender</span>
+          <span class="survey-level">2–3 years</span>
+          <div class="survey-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="survey-row">
+          <span class="survey-tool">GIMP / PS</span>
+          <span class="survey-level">2–3 years</span>
+          <div class="survey-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="survey-row">
+          <span class="survey-tool">Inkscape / AI</span>
+          <span class="survey-level">2–3 years</span>
+          <div class="survey-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="survey-row">
+          <span class="survey-tool">Krita / CSP</span>
+          <span class="survey-level">0–1 years</span>
+          <div class="survey-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="survey-row">
+          <span class="survey-tool">Godot / Unity</span>
+          <span class="survey-level">2+ years</span>
+          <div class="survey-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="survey-row">
+          <span class="survey-tool">Libresprite</span>
+          <span class="survey-level">No Experience</span>
+          <div class="survey-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 MOTION -->
+<section id="motion">
+  <div class="section-header reveal">
+    <div class="section-index">01 — Motion &amp; Video</div>
+    <h2 class="section-title">After Effects &amp; <strong>Premiere Pro</strong></h2>
+  </div>
+  <div class="motion-grid">
+    <div class="motion-card reveal">
+      <video controls muted loop playsinline preload="metadata"><source src="Responsive_21.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Motion Graphics · After Effects</div>
+        <div class="motion-title">Responsive Animation 21</div>
+        <div class="motion-desc">Animated motion graphics demonstrating responsive design transitions and visual storytelling techniques.</div>
+      </div>
+    </div>
+    <div class="motion-card reveal d1">
+      <video controls muted loop playsinline preload="metadata"><source src="Responsive_14.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Motion Graphics · After Effects</div>
+        <div class="motion-title">Responsive Animation 14</div>
+        <div class="motion-desc">Dynamic animation sequence showcasing fluid motion, visual rhythm, and layered compositing.</div>
+      </div>
+    </div>
+    <div class="motion-card reveal d2">
+      <video controls muted loop playsinline preload="metadata"><source src="Responsive_16.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Motion Graphics · After Effects</div>
+        <div class="motion-title">Responsive Animation 16</div>
+        <div class="motion-desc">Kinetic typography and animated graphics demonstrating After Effects compositing and timing.</div>
+      </div>
+    </div>
+    <div class="motion-card reveal">
+      <video controls muted loop playsinline preload="metadata"><source src="Responsive_17.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Motion Graphics · After Effects</div>
+        <div class="motion-title">Responsive Animation 17</div>
+        <div class="motion-desc">Animated visual sequence with layered compositing and smooth transition design.</div>
+      </div>
+    </div>
+    <div class="motion-card reveal d1">
+      <video controls muted loop playsinline preload="metadata"><source src="Responsive_10_3.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Motion Graphics · After Effects</div>
+        <div class="motion-title">Responsive Animation 10</div>
+        <div class="motion-desc">Complex motion sequence demonstrating advanced animation techniques and precise timing control.</div>
+      </div>
+    </div>
+    <div class="motion-card reveal d2">
+      <video controls muted loop playsinline preload="metadata"><source src="news_logo.mp4" type="video/mp4"/></video>
+      <div class="motion-card-body">
+        <div class="motion-tag">Logo Animation · After Effects</div>
+        <div class="motion-title">News Logo Reveal</div>
+        <div class="motion-desc">Animated logo reveal designed for a news broadcast identity — professional broadcast-style motion graphics.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 BLENDER -->
+<section id="blender">
+  <div class="section-header reveal">
+    <div class="section-index">02 — 3D Work</div>
+    <h2 class="section-title">Blender <strong>3D Modeling</strong></h2>
+  </div>
+  <div class="blend-grid">
+    <div class="blend-card reveal">
+      <img src="Abandon_house.png" alt="Abandoned House"/>
+      <div class="blend-card-body">
+        <div class="blend-tag">Architectural Modeling · Blender 5.1</div>
+        <div class="blend-title">Abandoned House</div>
+        <div class="blend-desc">Detailed two-story architectural scene with dormer windows, porch steps, and door group hierarchy. Full scene organization with camera and lighting setup.</div>
+        <span class="blend-badge">Full Scene · Camera Perspective</span>
+      </div>
+    </div>
+    <div class="blend-card reveal d1">
+      <img src="house.png" alt="Residential House"/>
+      <div class="blend-card-body">
+        <div class="blend-tag">Architectural Modeling · Blender 5.1</div>
+        <div class="blend-title">Residential House</div>
+        <div class="blend-desc">Clean suburban model with window groups, roof, and ground plane. Demonstrates clean topology and scaled proportional modeling at real-world 9.18m × 9.85m dimensions.</div>
+        <span class="blend-badge">Mesh Modeling · Scene Layout</span>
+      </div>
+    </div>
+    <div class="blend-card reveal d2">
+      <img src="goku.png" alt="Goku Character Sculpt"/>
+      <div class="blend-card-body">
+        <div class="blend-tag">Character Modeling · Blender 5.1</div>
+        <div class="blend-title">Goku — Character Sculpt</div>
+        <div class="blend-desc">Reference-based character modeling with polygon mesh topology, demonstrating figure anatomy understanding and professional character art workflow.</div>
+        <span class="blend-badge">Poly Modeling · Reference-Based</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 LOGOS -->
+<section id="logos">
+  <div class="section-header reveal">
+    <div class="section-index">03 — Brand Identity</div>
+    <h2 class="section-title">Logo Design &amp; <strong>Brand Identity</strong></h2>
+  </div>
+  <div class="logo-grid">
+    <div class="logo-card reveal">
+      <div class="logo-img-wrap dark">
+        <img src="ashwa-arrowz-new-logo-3D1.png" alt="Ashwa Arrowz"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">3D Logo · Blender + Illustrator</div>
+        <div class="logo-title">Ashwa Arrowz</div>
+        <div class="logo-desc">3D extruded logo with metallic blue gradient ring and upward-arrow mark. Full brand system including business card design for Managing Director.</div>
+      </div>
+    </div>
+    <div class="logo-card reveal d1">
+      <div class="logo-img-wrap light">
+        <img src="bhu-nidhi-logo1.png" alt="Bhu Nidhi Developers"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">Logo Design · Illustrator</div>
+        <div class="logo-title">Bhu Nidhi Developers</div>
+        <div class="logo-desc">Premium real estate brand with gold metallic BND lettermark, globe composite and city skyline silhouette. Builders · Developers · Constructions identity system.</div>
+      </div>
+    </div>
+    <div class="logo-card reveal d2">
+      <div class="logo-img-wrap teal-bg">
+        <img src="JPL-medwin-logo.png" alt="JPL Medwin Stacked"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">Logo Design · Illustrator</div>
+        <div class="logo-title">JPL Medwin Pvt. Ltd</div>
+        <div class="logo-desc">Healthcare brand with teal gradient lettermark in stacked and horizontal lockups. Clean medical identity with precise typographic hierarchy and matching business card.</div>
+      </div>
+    </div>
+    <div class="logo-card reveal">
+      <div class="logo-img-wrap dark">
+        <img src="Vasthra-kuteera-logo.png" alt="Vasthra Kuteera"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">Luxury Logo · Illustrator</div>
+        <div class="logo-title">Vasthra Kuteera by Preethi</div>
+        <div class="logo-desc">Luxury fashion brand with intricate gold mandala frame, VK monogram, deep crimson palette, and elegant script-serif wordmark for a premium textile boutique.</div>
+      </div>
+    </div>
+    <div class="logo-card reveal d1">
+      <div class="logo-img-wrap grey">
+        <img src="logo-1.png" alt="TriiUnion Gaming Studios"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">Logo Design · Illustrator</div>
+        <div class="logo-title">TriiUnion Gaming Studios</div>
+        <div class="logo-desc">Gaming studio identity with two logo variants — clean serif wordmark and icon mark featuring a circular target with bold red accent. Includes full game level map asset.</div>
+      </div>
+    </div>
+    <div class="logo-card reveal d2">
+      <div class="logo-img-wrap teal-bg">
+        <img src="JPL-medwin-logo1.png" alt="JPL Medwin Horizontal"/>
+      </div>
+      <div class="logo-card-body">
+        <div class="logo-tag">Logo Variant · Illustrator</div>
+        <div class="logo-title">JPL Medwin — Horizontal</div>
+        <div class="logo-desc">Horizontal lockup variant of the JPL Medwin identity, optimized for wide-format applications including headers, banners, and signage use cases.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ADS -->
+<section id="ads">
+  <div class="section-header reveal">
+    <div class="section-index">04 — Ad Campaigns</div>
+    <h2 class="section-title">Social Media &amp; <strong>Print Ads</strong></h2>
+  </div>
+  <div class="work-filters reveal">
+    <button class="filter-btn active" onclick="filterWork('all',this)">All</button>
+    <button class="filter-btn" onclick="filterWork('food',this)">Food &amp; F&amp;B</button>
+    <button class="filter-btn" onclick="filterWork('brand',this)">Brand</button>
+    <button class="filter-btn" onclick="filterWork('edu',this)">Education</button>
+  </div>
+  <div class="work-grid">
+    <div class="work-item span-5 tall reveal" data-cat="food">
+      <div class="img-wrap"><img src="Salad-Poster.jpg" alt="Salad Poster"/></div>
+      <div class="work-overlay"><div class="work-cat">Social Ad · Illustrator</div><div class="work-title">Healthy Salad Campaign</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-7 mid reveal d1" data-cat="food">
+      <div class="img-wrap"><img src="World-food-day-Poster.jpg" alt="World Food Day"/></div>
+      <div class="work-overlay"><div class="work-cat">Event Poster · Illustrator</div><div class="work-title">World Food Day</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-4 mid reveal" data-cat="food">
+      <div class="img-wrap"><img src="Diet-Food-Poster.jpg" alt="Diet Food"/></div>
+      <div class="work-overlay"><div class="work-cat">Social Ad · Photoshop</div><div class="work-title">Diet Food Series</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-4 mid reveal d1" data-cat="food">
+      <div class="img-wrap"><img src="healthy-organic-food-Poster.jpg" alt="Organic Food"/></div>
+      <div class="work-overlay"><div class="work-cat">Social Ad · Photoshop</div><div class="work-title">Organic Food Campaign</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-4 mid reveal d2" data-cat="food">
+      <div class="img-wrap"><img src="World-heart-day-Prime-foods-poster.jpg" alt="World Heart Day"/></div>
+      <div class="work-overlay"><div class="work-cat">Event Poster · Photoshop</div><div class="work-title">World Heart Day</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-6 mid reveal" data-cat="brand">
+      <div class="img-wrap"><img src="Business-Expansion-poster.jpg" alt="Business Expansion"/></div>
+      <div class="work-overlay"><div class="work-cat">Brand Ad · Illustrator</div><div class="work-title">Business Expansion</div><div class="work-client">Prime Info Groups</div></div>
+    </div>
+    <div class="work-item span-6 mid reveal d1" data-cat="edu">
+      <div class="img-wrap"><img src="K-ridge-Poster-7.jpg" alt="K-Ridge School"/></div>
+      <div class="work-overlay"><div class="work-cat">Admissions Ad · Photoshop</div><div class="work-title">Admissions Open 2026–27</div><div class="work-client">K-Ridge International School</div></div>
+    </div>
+    <div class="work-item span-4 short reveal" data-cat="food">
+      <div class="img-wrap"><img src="3-benifits-Poster.jpg" alt="3 Benefits"/></div>
+      <div class="work-overlay"><div class="work-cat">Infographic · Illustrator</div><div class="work-title">3 Benefits — Healthy Eating</div><div class="work-client">Prime Foods</div></div>
+    </div>
+    <div class="work-item span-4 short reveal d1" data-cat="food">
+      <div class="img-wrap"><img src="poster-1.jpg" alt="Poster"/></div>
+      <div class="work-overlay"><div class="work-cat">Print Design · Photoshop</div><div class="work-title">Promotional Poster</div><div class="work-client">Client Work</div></div>
+    </div>
+    <div class="work-item span-4 short reveal d2" data-cat="brand">
+      <div class="img-wrap"><img src="Untitled-2.jpg" alt="Creative"/></div>
+      <div class="work-overlay"><div class="work-cat">Print Design · Photoshop</div><div class="work-title">Creative Composition</div><div class="work-client">Personal Project</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 PRINT -->
+<section id="print">
+  <div class="section-header reveal">
+    <div class="section-index">05 — Print &amp; Identity</div>
+    <h2 class="section-title">Business Cards &amp; <strong>Print Design</strong></h2>
+  </div>
+  <div class="print-grid">
+    <div class="print-card reveal">
+      <img src="poster_1.jpg" alt="JPL Markwin Business Card"/>
+      <div class="print-card-body">
+        <div class="print-tag">Business Card · Front + Back · Photoshop</div>
+        <div class="print-title">JPL Markwin — Business Card</div>
+        <div class="print-desc">Full-bleed front and back business card. Teal-to-dark gradient with geometric hexagonal texture, clean logo placement, and structured contact hierarchy for CEO JanakiPadma M.</div>
+      </div>
+    </div>
+    <div class="print-card reveal d1">
+      <img src="poster-1.jpg" alt="Ashwa Arrowz Visiting Card"/>
+      <div class="print-card-body">
+        <div class="print-tag">Visiting Card · Front + Back · Illustrator</div>
+        <div class="print-title">Ashwa Arrowz — Visiting Card</div>
+        <div class="print-desc">Corporate visiting card for Managing Director Shruti Gururaj Solekar. Bold brand header with dynamic blue diagonal stripe motif and clean typographic layout consistent with the Ashwa Arrowz identity.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME MAP -->
+  <div class="map-wrap reveal" style="margin-top:1.5rem">
+    <img src="reference_map.png" alt="Game Level Map"/>
+    <div class="map-label">
+      <div class="map-label-tag">Game Level Design · Godot / Game Engine · TriiUnion Gaming Studios</div>
+      <div class="map-label-title">Reference Level Map — Top-Down Game World Asset</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 ABOUT -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-index">06 — About</div>
+    <h2 class="section-title">Engineer &amp; <strong>Visual Creator</strong></h2>
+  </div>
+  <div class="about-layout">
+    <div class="about-text reveal">
+      <p>I'm <strong>Jagadeesh Lanka</strong>, a Mechanical Engineering graduate student at the University of Cincinnati with a parallel passion for digital media and visual design spanning 2D, 3D, motion, and brand identity.</p>
+      <p>My engineering mindset brings <strong>precision and systems thinking</strong> to creative work — from complete brand identity systems (logo + business card + social ads) for real clients, to animated motion graphics in After Effects and architectural 3D environments in Blender.</p>
+      <p>Currently <strong>OPT eligible</strong> — STEM OPT eligible if required. Open to remote and on-site roles in digital media, AI research, and creative production.</p>
+    </div>
+    <div class="stats-grid reveal d1">
+      <div class="stat">
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Brands Designed</div>
+        <div class="stat-sub">Real clients — logos, cards, full systems</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Ad Campaigns</div>
+        <div class="stat-sub">Social media &amp; print across industries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2–3</div>
+        <div class="stat-label">Years 3D + Motion</div>
+        <div class="stat-sub">Blender, After Effects, Premiere Pro</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3.2</div>
+        <div class="stat-label">GPA</div>
+        <div class="stat-sub">M.Eng. Mechanical, Univ. of Cincinnati</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-index">07 — Tools &amp; Skills</div>
+    <h2 class="section-title">Software &amp; <strong>Capabilities</strong></h2>
+  </div>
+  <div class="tools-layout">
+    <div class="tool-card reveal">
+      <div class="tool-icon">🟠</div>
+      <div class="tool-name">Blender</div>
+      <div class="tool-level">2–3 Years · Architectural, Character, Curves</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card reveal d1">
+      <div class="tool-icon">🎬</div>
+      <div class="tool-name">After Effects</div>
+      <div class="tool-level">2–3 Years · Motion Graphics, Logo Reveals, Animation</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card reveal d2">
+      <div class="tool-icon">🎞️</div>
+      <div class="tool-name">Premiere Pro</div>
+      <div class="tool-level">2–3 Years · Video Editing, Color Grading</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:62%"></div></div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">🎨</div>
+      <div class="tool-name">Photoshop / GIMP</div>
+      <div class="tool-level">2–3 Years · Photo Editing, Compositing, Ad Design</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card reveal d1">
+      <div class="tool-icon">✏️</div>
+      <div class="tool-name">Illustrator / Inkscape</div>
+      <div class="tool-level">2–3 Years · Vector, Brand Identity, Logo, Print</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card reveal d2">
+      <div class="tool-icon">🕹️</div>
+      <div class="tool-name">Godot / Unity / VR Platforms</div>
+      <div class="tool-level">2+ Years · Game Engines, Level Design, VR/AR</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:60%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-index">08 — Experience</div>
+    <h2 class="section-title">Work &amp; <strong>Research</strong></h2>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-date">Dec 2025 – Apr 2026</div>
+      <div class="exp-role">Graduate Research Assistant</div>
+      <div class="exp-company">University of Cincinnati — UPRISE Project</div>
+      <div class="exp-desc">Reviewed 50+ studies on biosensor-based stress detection and VR/AR interventions for NSF-funded research. Built structured trackers across 30+ studies and synthesized findings into analytical reports.</div>
+    </div>
+    <div class="exp-card reveal d1">
+      <div class="exp-date">Jan – May 2024</div>
+      <div class="exp-role">Design Engineer Intern</div>
+      <div class="exp-company">GSR Engineering, Hyderabad</div>
+      <div class="exp-desc">Prototyped an eco-friendly scrubbing machine reducing cleaning time by 40% and saving $15K annually. Iterative prototyping reduced expenses by 15% and improved delivery efficiency by 20%.</div>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-date">Feb – May 2023</div>
+      <div class="exp-role">Data Scientist Intern</div>
+      <div class="exp-company">Innomatics Research Labs, Hyderabad</div>
+      <div class="exp-desc">Built a 24/7 healthcare chatbot using NLP improving response accuracy by 40%. Created KPI dashboards and performance monitoring tools enabling data-driven development decisions.</div>
+    </div>
+    <div class="exp-card reveal d1">
+      <div class="exp-date">May – Jun 2022</div>
+      <div class="exp-role">Engineering Intern</div>
+      <div class="exp-company">ONGC, Kakinada</div>
+      <div class="exp-desc">Analyzed gas compression control systems improving operational efficiency by 15% and reducing downtime by 20%. Streamlined alarm and trip settings reducing incident rates by 25%.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-index">09 — Get In Touch</div>
+    <h2 class="section-title">Let's <strong>Work Together</strong></h2>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-text reveal">
+      <p>I'm actively seeking opportunities as a <strong>2D/3D Digital Media Specialist</strong> — available for AI research projects, brand identity design, motion graphics, 3D asset creation, and ad campaigns.</p>
+      <p>Currently based in <strong>Cincinnati, OH</strong>. Open to remote and hybrid roles. <strong>OPT eligible</strong> — STEM OPT eligible if required.</p>
+    </div>
+    <div class="contact-links reveal d1">
+      <a href="mailto:lankanh@mail.uc.edu" class="contact-link"><span class="contact-icon">✉</span>lankanh@mail.uc.edu</a>
+      <a href="tel:+15135010590" class="contact-link"><span class="contact-icon">📞</span>+1 (513) 501-0590</a>
+      <a href="https://linkedin.com/in/lankajagadeesh" target="_blank" class="contact-link"><span class="contact-icon">in</span>linkedin.com/in/lankajagadeesh</a>
+      <a href="#motion" class="contact-link"><span class="contact-icon">🎨</span>View Portfolio Above</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Jagadeesh Lanka</span>
+  <span class="footer-copy">© 2026 · Digital Media Specialist · Cincinnati, OH</span>
+</footer>
+
+<script>
+// Cursor
+const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+
+// Reveal on scroll
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Filter ads
+function filterWork(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.work-item').forEach(item=>{
+    item.style.display=(cat==='all'||item.dataset.cat===cat)?'':'none';
+  });
+}
+</script>
+</body>
+</html>
